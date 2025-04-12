@@ -20,11 +20,12 @@ class ArticServer {
       {
         capabilities: {
           tools: {},
+          resources: {},
         },
       },
     );
     this.searchByTitleTool = new SearchByTitleTool();
-    this.getArtworkByIdTool = new GetArtworkByIdTool();
+    this.getArtworkByIdTool = new GetArtworkByIdTool(this.server);
     this.setupTools();
   }
 

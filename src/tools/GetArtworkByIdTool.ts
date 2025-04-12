@@ -1,3 +1,4 @@
+import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import imageToBase64 from 'image-to-base64';
 import z from 'zod';
 import { artworkResponseSchema, artworkSchema } from '../schemas/schemas';
@@ -11,7 +12,11 @@ export class GetArtworkByIdTool {
     id: z.number().describe('The ID of the artwork to retrieve.'),
   });
 
+  public readonly imageByTitle = new Map<string, string>();
+
   private readonly fields: string[] = Object.keys(artworkSchema._def.shape());
+
+  constructor(private server: McpServer) {}
 
   public async execute(input: z.infer<typeof this.inputSchema>) {
     const { id } = input;
@@ -19,7 +24,7 @@ export class GetArtworkByIdTool {
     try {
       const url = new URL(`https://api.artic.edu/api/v1/artworks/${id}`);
       url.searchParams.set('fields', this.fields.join(','));
-      console.error(`Fetching artwork by id ${id} from\n ${url.toString()}`);
+
       const response = await fetch(url.toString(), {
         method: 'GET',
         headers: {
@@ -51,13 +56,10 @@ export class GetArtworkByIdTool {
 
       const content = [];
       content.push({ type: 'text' as const, text });
-      const imageURL = `${parsedResponse.data.config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`;
-      const imageBase64 = await imageToBase64(imageURL);
-      content.push({
-        type: 'image' as const,
-        data: imageBase64,
-        mimeType: 'image/jpeg',
-      });
+      const image = await this.getArtworkImage(artwork, `${parsedResponse.data.config.iiif_url}`);
+      if (image) {
+        content.push(image);
+      }
       return { content };
     }
     catch (error) {
@@ -66,6 +68,31 @@ export class GetArtworkByIdTool {
         content: [{ type: 'text' as const, text: `Error searching by id ${id}: ${error}` }],
         isError: true,
       };
+    }
+  }
+
+  private async getArtworkImage(artwork: z.infer<typeof artworkSchema>, iiif_url: string) {
+    if (!artwork.image_id) {
+      try {
+        const imageURL = `${iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`;
+        const imageBase64 = await imageToBase64(imageURL);
+        this.imageByTitle.set(artwork.title, imageBase64);
+        this.server.server.notification({
+          method: 'notifications/resources/list_changed',
+        });
+        return {
+          type: 'image' as const,
+          data: imageBase64,
+          mimeType: 'image/jpeg',
+        };
+      }
+      catch (error) {
+        console.error(`Error fetching image for artwork ${artwork.id}:`, error);
+        return {
+          type: 'text' as const,
+          text: `Error fetching image for artwork ${artwork.id}: ${error}`,
+        };
+      }
     }
   }
 }
