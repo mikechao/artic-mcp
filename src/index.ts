@@ -3,6 +3,9 @@
 import process from 'node:process';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { ListResourcesRequestSchema, ReadResourceRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+import { ListResources } from './handlers/ListResources';
+import { ReadResources } from './handlers/ReadResources';
 import { GetArtworkByIdTool } from './tools/GetArtworkByIdTool';
 import { SearchByTitleTool } from './tools/SearchByTitleTool';
 
@@ -10,6 +13,8 @@ class ArticServer {
   private server: McpServer;
   private searchByTitleTool: SearchByTitleTool;
   private getArtworkByIdTool: GetArtworkByIdTool;
+  private listResources: ListResources;
+  private readResources: ReadResources;
 
   constructor() {
     this.server = new McpServer(
@@ -26,7 +31,10 @@ class ArticServer {
     );
     this.searchByTitleTool = new SearchByTitleTool();
     this.getArtworkByIdTool = new GetArtworkByIdTool(this.server);
+    this.listResources = new ListResources(this.getArtworkByIdTool);
+    this.readResources = new ReadResources(this.getArtworkByIdTool);
     this.setupTools();
+    this.setupRequestHandlers();
   }
 
   private setupTools(): void {
@@ -42,6 +50,15 @@ class ArticServer {
       this.getArtworkByIdTool.inputSchema.shape,
       this.getArtworkByIdTool.execute.bind(this.getArtworkByIdTool),
     );
+  }
+
+  private setupRequestHandlers(): void {
+    this.server.server.setRequestHandler(ListResourcesRequestSchema, async () => {
+      return await this.listResources.handle();
+    });
+    this.server.server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+      return await this.readResources.handle(request);
+    });
   }
 
   async start(): Promise<void> {
