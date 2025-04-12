@@ -1,3 +1,4 @@
+import imageToBase64 from 'image-to-base64';
 import z from 'zod';
 import { artworkResponseSchema, artworkSchema } from '../schemas/schemas';
 
@@ -50,6 +51,13 @@ export class GetArtworkByIdTool {
 
       const content = [];
       content.push({ type: 'text' as const, text });
+      const imageURL = `${parsedResponse.data.config.iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`;
+      const imageBase64 = await imageToBase64(imageURL);
+      content.push({
+        type: 'image' as const,
+        data: imageBase64,
+        mimeType: 'image/jpeg',
+      });
       return { content };
     }
     catch (error) {
