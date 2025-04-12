@@ -67,7 +67,7 @@ export class SearchByTitleTool {
       const artText = parsedData.data.map((artwork) => {
         return `Title: ${artwork.title}\n`
           + `Artwork ID: ${artwork.id}\n`
-          + `Thumbnail alt text: ${artwork.thumbnail.alt_text}\n`
+          + `Thumbnail alt text: ${artwork.thumbnail?.alt_text ?? 'No thumbnail available'}\n`
           + `Score: ${artwork._score}\n`;
       }).join('\n-----\n');
       const paginationText = `\nPagination Info\n`

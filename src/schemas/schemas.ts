@@ -52,7 +52,7 @@ export const artworkSearchResponseSchema = z.object({
     api_link: z.string(),
     is_boosted: z.boolean(),
     title: z.string(),
-    thumbnail: thumbnailSchema,
+    thumbnail: thumbnailSchema.nullable(),
     timestamp: z.string(),
   })),
   info: apiInfoSchema,
