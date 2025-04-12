@@ -17,31 +17,37 @@ export class SearchByTitleTool {
 
     try {
       const query = {
-        bool: {
-          should: [
-            {
-              match_phrase: {
-                title: `${title}`,
+        query: {
+          bool: {
+            should: [
+              {
+                match_phrase: {
+                  title: `${title}`,
+                },
               },
-            },
-            {
-              match_phrase: {
-                alt_titles: `${title}`,
+              {
+                match_phrase: {
+                  alt_titles: `${title}`,
+                },
               },
-            },
-          ],
-          minimum_should_match: 1,
+            ],
+            minimum_should_match: 1,
+          },
         },
       };
       const jsonQuery = JSON.stringify(query);
-      const encodedQuery = encodeURIComponent(jsonQuery);
 
       const url = new URL(this.apiBaseUrl);
       url.searchParams.set('page', `${page}`);
       url.searchParams.set('limit', `${limit}`);
-      url.searchParams.set('params', encodedQuery);
 
-      const response = await fetch(url.toString());
+      const response = await fetch(url.toString(), {
+        method: 'POST',
+        body: jsonQuery,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
