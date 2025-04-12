@@ -3,9 +3,11 @@
 import process from 'node:process';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { SearchByTitleTool } from './tools/SearchByTitleTool';
 
 class ArticServer {
   private server: McpServer;
+  private searchByTitleTool: SearchByTitleTool;
 
   constructor() {
     this.server = new McpServer(
@@ -18,6 +20,17 @@ class ArticServer {
           tools: {},
         },
       },
+    );
+    this.searchByTitleTool = new SearchByTitleTool();
+    this.setupTools();
+  }
+
+  private setupTools(): void {
+    this.server.tool(
+      this.searchByTitleTool.name,
+      this.searchByTitleTool.description,
+      this.searchByTitleTool.inputSchema.shape,
+      this.searchByTitleTool.execute.bind(this.searchByTitleTool),
     );
   }
 
