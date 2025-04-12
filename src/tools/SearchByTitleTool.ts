@@ -46,6 +46,7 @@ export class SearchByTitleTool {
         body: jsonQuery,
         headers: {
           'Content-Type': 'application/json',
+          'AIC-User-Agent': 'artic-mcp (mike.chao.one@gmail.com)',
         },
       });
       if (!response.ok) {
@@ -81,7 +82,7 @@ export class SearchByTitleTool {
       };
     }
     catch (error) {
-      console.error('Error executing search:', error);
+      console.error(`Error executing search by title ${title}:`, error);
       return {
         content: [{ type: 'text' as const, text: `Error searching by title ${title}: ${error}` }],
         isError: true,
