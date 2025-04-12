@@ -16,17 +16,17 @@ export const thumbnailSchema = z.object({
   alt_text: z.string(),
 });
 
-// Artwork schema
-export const artworkSchema = z.object({
-  _score: z.number(),
-  id: z.number(),
-  api_model: z.string(),
-  api_link: z.string(),
-  is_boosted: z.boolean(),
-  title: z.string(),
-  thumbnail: thumbnailSchema,
-  timestamp: z.string(),
-});
+// // Artwork schema
+// export const artworkSchema = z.object({
+//   _score: z.number(),
+//   id: z.number(),
+//   api_model: z.string(),
+//   api_link: z.string(),
+//   is_boosted: z.boolean(),
+//   title: z.string(),
+//   thumbnail: thumbnailSchema,
+//   timestamp: z.string(),
+// });
 
 // API Info schema
 export const apiInfoSchema = z.object({
@@ -45,7 +45,16 @@ export const apiConfigSchema = z.object({
 export const artworkSearchResponseSchema = z.object({
   preference: z.string().nullable(),
   pagination: paginationSchema,
-  data: z.array(artworkSchema),
+  data: z.array(z.object({
+    _score: z.number(),
+    id: z.number(),
+    api_model: z.string(),
+    api_link: z.string(),
+    is_boosted: z.boolean(),
+    title: z.string(),
+    thumbnail: thumbnailSchema,
+    timestamp: z.string(),
+  })),
   info: apiInfoSchema,
   config: apiConfigSchema,
 });
