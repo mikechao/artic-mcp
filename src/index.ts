@@ -46,7 +46,7 @@ class ArticServer {
   async start(): Promise<void> {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
-    console.error('Met Museum MCP server running on stdio');
+    console.error('Art Institute of Chicago MCP server running on stdio');
   }
 }
 
