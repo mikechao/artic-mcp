@@ -50,14 +50,6 @@ export class GetArtworkByIdTool {
 
       const content = [];
       content.push({ type: 'text' as const, text });
-      if (artwork.thumbnail && artwork.thumbnail.lqip) {
-        const base64Data = artwork.thumbnail.lqip.replace(/^data:image\/\w+;base64,/, '');
-        content.push({
-          type: 'image' as const,
-          data: base64Data,
-          mimeType: 'image/jpeg',
-        });
-      }
       return { content };
     }
     catch (error) {
