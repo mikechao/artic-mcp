@@ -16,18 +16,6 @@ export const thumbnailSchema = z.object({
   alt_text: z.string(),
 });
 
-// // Artwork schema
-// export const artworkSchema = z.object({
-//   _score: z.number(),
-//   id: z.number(),
-//   api_model: z.string(),
-//   api_link: z.string(),
-//   is_boosted: z.boolean(),
-//   title: z.string(),
-//   thumbnail: thumbnailSchema,
-//   timestamp: z.string(),
-// });
-
 // API Info schema
 export const apiInfoSchema = z.object({
   license_text: z.string(),
@@ -41,7 +29,10 @@ export const apiConfigSchema = z.object({
   website_url: z.string(),
 });
 
-// Artwork Search Response schema
+/**
+ * Artwork Search Response schema
+ * https://api.artic.edu/api/v1/artworks/search
+ */
 export const artworkSearchResponseSchema = z.object({
   preference: z.string().nullable(),
   pagination: paginationSchema,
@@ -55,6 +46,34 @@ export const artworkSearchResponseSchema = z.object({
     thumbnail: thumbnailSchema.nullable(),
     timestamp: z.string(),
   })),
+  info: apiInfoSchema,
+  config: apiConfigSchema,
+});
+
+/**
+ * https://api.artic.edu/api/v1/artworks/{artwork_id}?fields=artworkSchema.keys()
+ *
+ *
+ */
+export const artworkSchema = z.object({
+  id: z.number(),
+  title: z.string(),
+  alt_titles: z.array(z.string()).nullable(),
+  thumbnail: thumbnailSchema,
+  artist_display: z.string(),
+  place_of_origin: z.string(),
+  description: z.string(),
+  dimensions: z.string(),
+  medium_display: z.string(),
+  credit_line: z.string(),
+  is_on_view: z.boolean(),
+  department_title: z.string(),
+  artist_id: z.number(),
+  image_id: z.string(),
+});
+
+export const artworkResponseSchema = z.object({
+  data: artworkSchema,
   info: apiInfoSchema,
   config: apiConfigSchema,
 });
