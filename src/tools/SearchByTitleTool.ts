@@ -64,12 +64,17 @@ export class SearchByTitleTool {
           isError: false,
         };
       }
-      const text = parsedData.data.map((artwork) => {
+      const artText = parsedData.data.map((artwork) => {
         return `Title: ${artwork.title}\n`
           + `ID: ${artwork.id}\n`
           + `Score: ${artwork._score}\n`;
       }).join('\n-----\n');
+      const paginationText = `\nPagination Info\n`
+        + `Total: ${parsedData.pagination.total}\n`
+        + `Total Pages: ${parsedData.pagination.total_pages}\n`
+        + `Current Page: ${parsedData.pagination.current_page}`;
 
+      const text = artText + paginationText;
       return {
         content: [{ type: 'text' as const, text }],
       };
