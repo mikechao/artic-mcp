@@ -3,11 +3,13 @@
 import process from 'node:process';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { GetArtworkByIdTool } from './tools/GetArtworkByIdTool';
 import { SearchByTitleTool } from './tools/SearchByTitleTool';
 
 class ArticServer {
   private server: McpServer;
   private searchByTitleTool: SearchByTitleTool;
+  private getArtworkByIdTool: GetArtworkByIdTool;
 
   constructor() {
     this.server = new McpServer(
@@ -22,6 +24,7 @@ class ArticServer {
       },
     );
     this.searchByTitleTool = new SearchByTitleTool();
+    this.getArtworkByIdTool = new GetArtworkByIdTool();
     this.setupTools();
   }
 
@@ -31,6 +34,12 @@ class ArticServer {
       this.searchByTitleTool.description,
       this.searchByTitleTool.inputSchema.shape,
       this.searchByTitleTool.execute.bind(this.searchByTitleTool),
+    );
+    this.server.tool(
+      this.getArtworkByIdTool.name,
+      this.getArtworkByIdTool.description,
+      this.getArtworkByIdTool.inputSchema.shape,
+      this.getArtworkByIdTool.execute.bind(this.getArtworkByIdTool),
     );
   }
 

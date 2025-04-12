@@ -58,7 +58,7 @@ export class GetArtworkByIdTool {
           mimeType: 'image/jpeg',
         });
       }
-      return content;
+      return { content };
     }
     catch (error) {
       console.error(`Error fetching artwork by id ${id}:`, error);
