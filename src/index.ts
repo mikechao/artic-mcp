@@ -6,6 +6,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { ListResourcesRequestSchema, ReadResourceRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { ListResources } from './handlers/ListResources';
 import { ReadResources } from './handlers/ReadResources';
+import { FullTextSearchTool } from './tools/FullTextSearchTool';
 import { GetArtworkByIdTool } from './tools/GetArtworkByIdTool';
 import { SearchByTitleTool } from './tools/SearchByTitleTool';
 
@@ -13,6 +14,7 @@ class ArticServer {
   private server: McpServer;
   private searchByTitleTool: SearchByTitleTool;
   private getArtworkByIdTool: GetArtworkByIdTool;
+  private fullTextSearchTool: FullTextSearchTool;
   private listResources: ListResources;
   private readResources: ReadResources;
 
@@ -31,6 +33,7 @@ class ArticServer {
     );
     this.searchByTitleTool = new SearchByTitleTool();
     this.getArtworkByIdTool = new GetArtworkByIdTool(this.server);
+    this.fullTextSearchTool = new FullTextSearchTool();
     this.listResources = new ListResources(this.getArtworkByIdTool);
     this.readResources = new ReadResources(this.getArtworkByIdTool);
     this.setupTools();
@@ -49,6 +52,12 @@ class ArticServer {
       this.getArtworkByIdTool.description,
       this.getArtworkByIdTool.inputSchema.shape,
       this.getArtworkByIdTool.execute.bind(this.getArtworkByIdTool),
+    );
+    this.server.tool(
+      this.fullTextSearchTool.name,
+      this.fullTextSearchTool.description,
+      this.fullTextSearchTool.inputSchema.shape,
+      this.fullTextSearchTool.execute.bind(this.fullTextSearchTool),
     );
   }
 
