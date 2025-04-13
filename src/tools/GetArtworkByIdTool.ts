@@ -48,7 +48,7 @@ export class GetArtworkByIdTool {
         + `${artwork.alt_titles ? `Alt Titles: ${artwork.alt_titles.join(', ')}\n` : ''}`
         + `Artist: ${artwork.artist_display}\n`
         + `Artist ID: ${artwork.artist_id}\n`
-        + `Description: ${artwork.description}\n`
+        + `Description: ${artwork.description ?? 'No description available'}\n`
         + `Image ID: ${artwork.image_id}\n`
         + `Place of Origin: ${artwork.place_of_origin}\n`
         + `Dimensions: ${artwork.dimensions}\n`

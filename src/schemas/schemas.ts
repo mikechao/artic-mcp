@@ -62,7 +62,7 @@ export const artworkSchema = z.object({
   thumbnail: thumbnailSchema,
   artist_display: z.string(),
   place_of_origin: z.string(),
-  description: z.string(),
+  description: z.string().nullable(),
   dimensions: z.string(),
   medium_display: z.string(),
   credit_line: z.string(),
