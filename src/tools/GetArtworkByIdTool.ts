@@ -16,19 +16,22 @@ export class GetArtworkByIdTool {
 
   private readonly fields: string[] = Object.keys(artworkSchema._def.shape());
 
+  private readonly apiBaseUrl: string = `https://api.artic.edu/api/v1/artworks`;
+
   constructor(private server: McpServer) {}
 
   public async execute(input: z.infer<typeof this.inputSchema>) {
     const { id } = input;
 
     try {
-      const url = new URL(`https://api.artic.edu/api/v1/artworks/${id}`);
+      const url = new URL(`${this.apiBaseUrl}/${id}`);
       url.searchParams.set('fields', this.fields.join(','));
 
       const response = await fetch(url.toString(), {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          'AIC-User-Agent': 'artic-mcp (mike.chao.one@gmail.com)',
         },
       });
       if (!response.ok) {
