@@ -76,7 +76,7 @@ export class GetArtworkByIdTool {
   }
 
   private async getArtworkImage(artwork: z.infer<typeof artworkSchema>, iiif_url: string) {
-    if (!artwork.image_id) {
+    if (artwork.image_id) {
       try {
         const imageURL = `${iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`;
         const imageBase64 = await imageToBase64(imageURL);
