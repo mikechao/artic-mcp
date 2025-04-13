@@ -5,7 +5,8 @@ import { artworkResponseSchema, artworkSchema } from '../schemas/schemas';
 
 export class GetArtworkByIdTool {
   public readonly name: string = 'get-artwork-by-id';
-  public readonly description: string = `Get a specific artwork by its ID from the Art Institute of Chicago. `
+  public readonly description: string = `Get additional information, including an image if available, about a specific artwork by its ID`
+    + ` from the Art Institute of Chicago. `
     + `Using the value of Artwork ID from the 'search-by-title' tool.`;
 
   public readonly inputSchema = z.object({
