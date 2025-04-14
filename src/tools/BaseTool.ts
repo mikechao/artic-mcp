@@ -1,4 +1,5 @@
 import type { z } from 'zod';
+import { articRateLimiter } from '../utils/RateLimiter';
 
 export abstract class BaseTool<T extends z.ZodType, R> {
   public abstract readonly name: string;
@@ -38,7 +39,7 @@ export abstract class BaseTool<T extends z.ZodType, R> {
     options: RequestInit,
     schema: S,
   ): Promise<z.infer<S>> {
-    const response = await fetch(url.toString(), {
+    const response = await articRateLimiter.fetch(url.toString(), {
       ...options,
       headers: {
         ...this.getDefaultHeaders(),
