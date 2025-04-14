@@ -2,77 +2,62 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import imageToBase64 from 'image-to-base64';
 import z from 'zod';
 import { artworkResponseSchema, artworkSchema } from '../schemas/schemas';
+import { BaseTool } from './BaseTool';
 
-export class GetArtworkByIdTool {
+const artworkByIdSchema = z.object({
+  id: z.number().describe('The ID of the artwork to retrieve.'),
+});
+
+export class GetArtworkByIdTool extends BaseTool<typeof artworkByIdSchema, any> {
   public readonly name: string = 'get-artwork-by-id';
   public readonly description: string = `Get additional information, including an image if available, about a specific artwork by its ID`
     + ` from the Art Institute of Chicago. `
     + `Using the value of Artwork ID from the 'search-by-title' tool.`;
 
-  public readonly inputSchema = z.object({
-    id: z.number().describe('The ID of the artwork to retrieve.'),
-  });
-
+  public readonly inputSchema = artworkByIdSchema;
   public readonly imageByTitle = new Map<string, string>();
-
   private readonly fields: string[] = Object.keys(artworkSchema._def.shape());
 
-  private readonly apiBaseUrl: string = `https://api.artic.edu/api/v1/artworks`;
+  constructor(private server: McpServer) {
+    super();
+  }
 
-  constructor(private server: McpServer) {}
-
-  public async execute(input: z.infer<typeof this.inputSchema>) {
+  public async executeCore(input: z.infer<typeof this.inputSchema>) {
     const { id } = input;
 
-    try {
-      const url = new URL(`${this.apiBaseUrl}/${id}`);
-      url.searchParams.set('fields', this.fields.join(','));
+    const url = new URL(`${this.apiBaseUrl}/artworks/${id}`);
+    url.searchParams.set('fields', this.fields.join(','));
 
-      const response = await fetch(url.toString(), {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'AIC-User-Agent': 'artic-mcp (mike.chao.one@gmail.com)',
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+    const parsedResponse = await this.safeApiRequest(
+      url,
+      { method: 'GET' },
+      artworkResponseSchema,
+    );
+    const artwork = parsedResponse.data;
+    const text = this.formatArtworkDetails(artwork);
 
-      const jsonResponse = await response.json();
-      const parsedResponse = artworkResponseSchema.safeParse(jsonResponse);
-      if (!parsedResponse.success) {
-        throw new Error(`Invalid response shape: ${JSON.stringify(parsedResponse.error.issues, null, 2)}`);
-      }
-      const artwork = parsedResponse.data.data;
-      const text = `Title: ${artwork.title}\n`
-        + `${artwork.alt_titles ? `Alt Titles: ${artwork.alt_titles.join(', ')}\n` : ''}`
-        + `Artist: ${artwork.artist_display}\n`
-        + `Artist ID: ${artwork.artist_id}\n`
-        + `Description: ${artwork.description ?? 'No description available'}\n`
-        + `Image ID: ${artwork.image_id}\n`
-        + `Place of Origin: ${artwork.place_of_origin}\n`
-        + `Dimensions: ${artwork.dimensions}\n`
-        + `Medium: ${artwork.medium_display}\n`
-        + `Credit Line: ${artwork.credit_line}\n`
-        + `Department: ${artwork.department_title}\n`
-        + `Is On View: ${artwork.is_on_view ? 'Yes' : 'No'}`;
-
-      const content = [];
-      content.push({ type: 'text' as const, text });
-      const image = await this.getArtworkImage(artwork, `${parsedResponse.data.config.iiif_url}`);
-      if (image) {
-        content.push(image);
-      }
-      return { content };
+    const content = [];
+    content.push({ type: 'text' as const, text });
+    const image = await this.getArtworkImage(artwork, `${parsedResponse.config.iiif_url}`);
+    if (image) {
+      content.push(image);
     }
-    catch (error) {
-      console.error(`Error fetching artwork by id ${id}:`, error);
-      return {
-        content: [{ type: 'text' as const, text: `Error searching by id ${id}: ${error}` }],
-        isError: true,
-      };
-    }
+    return { content };
+  }
+
+  private formatArtworkDetails(artwork: z.infer<typeof artworkSchema>) {
+    return `Title: ${artwork.title}\n`
+      + `${artwork.alt_titles ? `Alt Titles: ${artwork.alt_titles.join(', ')}\n` : ''}`
+      + `Artist: ${artwork.artist_display}\n`
+      + `Artist ID: ${artwork.artist_id}\n`
+      + `Description: ${artwork.description ?? 'No description available'}\n`
+      + `Image ID: ${artwork.image_id}\n`
+      + `Place of Origin: ${artwork.place_of_origin}\n`
+      + `Dimensions: ${artwork.dimensions}\n`
+      + `Medium: ${artwork.medium_display}\n`
+      + `Credit Line: ${artwork.credit_line}\n`
+      + `Department: ${artwork.department_title}\n`
+      + `Is On View: ${artwork.is_on_view ? 'Yes' : 'No'}`;
   }
 
   private async getArtworkImage(artwork: z.infer<typeof artworkSchema>, iiif_url: string) {
@@ -98,5 +83,6 @@ export class GetArtworkByIdTool {
         };
       }
     }
+    return null;
   }
 }
