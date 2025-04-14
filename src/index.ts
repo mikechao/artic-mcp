@@ -6,7 +6,9 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { ListResourcesRequestSchema, ReadResourceRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { ListResources } from './handlers/ListResources';
 import { ReadResources } from './handlers/ReadResources';
+import { ArtistSearchTool } from './tools/ArtistSearchTool';
 import { FullTextSearchTool } from './tools/FullTextSearchTool';
+import { GetArtworkByArtistTool } from './tools/GetArtworkByArtistTool';
 import { GetArtworkByIdTool } from './tools/GetArtworkByIdTool';
 import { SearchByTitleTool } from './tools/SearchByTitleTool';
 
@@ -15,6 +17,8 @@ class ArticServer {
   private searchByTitleTool: SearchByTitleTool;
   private getArtworkByIdTool: GetArtworkByIdTool;
   private fullTextSearchTool: FullTextSearchTool;
+  private artistSearchTool: ArtistSearchTool;
+  private getArtworkByArtistTool: GetArtworkByArtistTool;
   private listResources: ListResources;
   private readResources: ReadResources;
 
@@ -34,6 +38,8 @@ class ArticServer {
     this.searchByTitleTool = new SearchByTitleTool();
     this.getArtworkByIdTool = new GetArtworkByIdTool(this.server);
     this.fullTextSearchTool = new FullTextSearchTool();
+    this.artistSearchTool = new ArtistSearchTool();
+    this.getArtworkByArtistTool = new GetArtworkByArtistTool();
     this.listResources = new ListResources(this.getArtworkByIdTool);
     this.readResources = new ReadResources(this.getArtworkByIdTool);
     this.setupTools();
@@ -58,6 +64,18 @@ class ArticServer {
       this.fullTextSearchTool.description,
       this.fullTextSearchTool.inputSchema.shape,
       this.fullTextSearchTool.execute.bind(this.fullTextSearchTool),
+    );
+    this.server.tool(
+      this.artistSearchTool.name,
+      this.artistSearchTool.description,
+      this.artistSearchTool.inputSchema.shape,
+      this.artistSearchTool.execute.bind(this.artistSearchTool),
+    );
+    this.server.tool(
+      this.getArtworkByArtistTool.name,
+      this.getArtworkByArtistTool.description,
+      this.getArtworkByArtistTool.inputSchema.shape,
+      this.getArtworkByArtistTool.execute.bind(this.getArtworkByArtistTool),
     );
   }
 
