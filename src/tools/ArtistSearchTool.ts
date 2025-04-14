@@ -21,11 +21,13 @@ export class ArtistSearchTool extends BaseTool<typeof artistSearchSchema, any> {
     const { name, limit, page } = input;
 
     const query = {
-      bool: {
-        should: [
-          { match_phrase: { title: `${name}` } },
-        ],
-        minimum_should_match: 1,
+      query: {
+        bool: {
+          should: [
+            { match_phrase: { title: `"${name}"` } },
+          ],
+          minimum_should_match: 1,
+        },
       },
     };
 
