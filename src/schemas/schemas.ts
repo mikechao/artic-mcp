@@ -77,3 +77,21 @@ export const artworkResponseSchema = z.object({
   info: apiInfoSchema,
   config: apiConfigSchema,
 });
+
+/**
+ * https://api.artic.edu/api/v1/agents/search?limit=10&page=1
+ */
+export const artistSearchResponseSchema = z.object({
+  preference: z.string().nullable(),
+  pagination: paginationSchema,
+  data: z.array(z.object({
+    _score: z.number(),
+    id: z.number(),
+    api_model: z.string(),
+    api_link: z.string(),
+    title: z.string(),
+    timestamp: z.string(),
+  })),
+  info: apiInfoSchema,
+  config: apiConfigSchema,
+});
