@@ -7,10 +7,8 @@ import { ListResourcesRequestSchema, ReadResourceRequestSchema } from '@modelcon
 import { ListResources } from './handlers/ListResources';
 import { ReadResources } from './handlers/ReadResources';
 import { ArtistSearchTool } from './tools/ArtistSearchTool';
-import { ElasticsearchQueryTool } from './tools/ElasticsearchQueryTool';
 import { FullTextSearchTool } from './tools/FullTextSearchTool';
 import { GetArtworkByArtistTool } from './tools/GetArtworkByArtistTool';
-import { GetArtworkByElasticsearchQuery } from './tools/GetArtworkByElasticsearchQuery';
 import { GetArtworkByIdTool } from './tools/GetArtworkByIdTool';
 import { SearchByTitleTool } from './tools/SearchByTitleTool';
 
@@ -21,8 +19,6 @@ class ArticServer {
   private fullTextSearchTool: FullTextSearchTool;
   private artistSearchTool: ArtistSearchTool;
   private getArtworkByArtistTool: GetArtworkByArtistTool;
-  private elasticsearchQueryTool: ElasticsearchQueryTool;
-  private getArtworkByElasticsearchQueryTool: GetArtworkByElasticsearchQuery;
   private listResources: ListResources;
   private readResources: ReadResources;
 
@@ -44,8 +40,6 @@ class ArticServer {
     this.fullTextSearchTool = new FullTextSearchTool();
     this.artistSearchTool = new ArtistSearchTool();
     this.getArtworkByArtistTool = new GetArtworkByArtistTool();
-    this.elasticsearchQueryTool = new ElasticsearchQueryTool();
-    this.getArtworkByElasticsearchQueryTool = new GetArtworkByElasticsearchQuery();
     this.listResources = new ListResources(this.getArtworkByIdTool);
     this.readResources = new ReadResources(this.getArtworkByIdTool);
     this.setupTools();
@@ -65,12 +59,12 @@ class ArticServer {
       this.getArtworkByIdTool.inputSchema.shape,
       this.getArtworkByIdTool.execute.bind(this.getArtworkByIdTool),
     );
-    // this.server.tool(
-    //   this.fullTextSearchTool.name,
-    //   this.fullTextSearchTool.description,
-    //   this.fullTextSearchTool.inputSchema.shape,
-    //   this.fullTextSearchTool.execute.bind(this.fullTextSearchTool),
-    // );
+    this.server.tool(
+      this.fullTextSearchTool.name,
+      this.fullTextSearchTool.description,
+      this.fullTextSearchTool.inputSchema.shape,
+      this.fullTextSearchTool.execute.bind(this.fullTextSearchTool),
+    );
     this.server.tool(
       this.artistSearchTool.name,
       this.artistSearchTool.description,
@@ -82,18 +76,6 @@ class ArticServer {
       this.getArtworkByArtistTool.description,
       this.getArtworkByArtistTool.inputSchema.shape,
       this.getArtworkByArtistTool.execute.bind(this.getArtworkByArtistTool),
-    );
-    this.server.tool(
-      this.elasticsearchQueryTool.name,
-      this.elasticsearchQueryTool.description,
-      this.elasticsearchQueryTool.inputSchema.shape,
-      this.elasticsearchQueryTool.execute.bind(this.elasticsearchQueryTool),
-    );
-    this.server.tool(
-      this.getArtworkByElasticsearchQueryTool.name,
-      this.getArtworkByElasticsearchQueryTool.description,
-      this.getArtworkByElasticsearchQueryTool.inputSchema.shape,
-      this.getArtworkByElasticsearchQueryTool.execute.bind(this.getArtworkByElasticsearchQueryTool),
     );
   }
 
