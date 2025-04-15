@@ -164,3 +164,45 @@ Find works fo art by an artist
   Total Pages: 2
   Current Page: 1
   ```
+
+## Usage
+
+### Usage with Claude Desktop
+
+Add this to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcp-servers": {
+    "artic-museum": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "artic-mcp"
+      ]
+    }
+  }
+}
+```
+
+## Example queries
+
+Here some questions you can ask the AI model when this server in connected:
+
+```
+Can you show me the painting titled "Nighthawks"?
+Can you find art done by Vincent van Gogh in 1890 that is on display?
+Can you find art by the artist Jackson Pollock?
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This MCP server is licensed under the MIT License. This means you are free to use, modify, and distribute the software, subject to the terms and conditions of the MIT License. For more details, please see the LICENSE file in the project repository.
+
+## Disclaimer
+
+This MCP Server is not officially associated with The Art Institute of Chicago. It is a third-party implementation of the [The Art Institute of Chicago's API](https://api.artic.edu/docs/) with a MCP Server.
