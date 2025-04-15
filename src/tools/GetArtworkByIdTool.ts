@@ -57,7 +57,19 @@ export class GetArtworkByIdTool extends BaseTool<typeof artworkByIdSchema, any> 
       + `Medium: ${artwork.medium_display}\n`
       + `Credit Line: ${artwork.credit_line}\n`
       + `Department: ${artwork.department_title}\n`
-      + `Is On View: ${artwork.is_on_view ? 'Yes' : 'No'}`;
+      + `Is On View: ${artwork.is_on_view ? 'Yes' : 'No'}\n`
+      + `Main Reference Number: ${artwork.main_reference_number}\n`
+      + `Has not been viewed much: ${artwork.has_not_been_viewed_much ? 'Yes' : 'No'}\n`
+      + `Date Start: ${artwork.date_start ?? 'N/A'}\n`
+      + `Date End: ${artwork.date_end ?? 'N/A'}\n`
+      + `Date: ${artwork.date_display ?? 'N/A'}\n`
+      + `Fiscal Year: ${artwork.fiscal_year}\n`
+      + `Is Public Domain: ${artwork.is_public_domain ? 'Yes' : 'No'}\n`
+      + `Gallery: ${artwork.gallery_title}\n`
+      + `Artwork Type: ${artwork.artwork_type_title}\n`
+      + `Artist Title: ${artwork.artist_title}\n`
+      + `Artist Titles: ${artwork.artist_titles.join(', ')}\n`
+      + `Style Title: ${artwork.style_title}\n`;
   }
 
   private async getArtworkImage(artwork: z.infer<typeof artworkSchema>, iiif_url: string) {
