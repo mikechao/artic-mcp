@@ -75,3 +75,34 @@ Gets additional information, including the image if available, for a piece of ar
   ```
   **image encoded in base64 if available
   ```
+
+### 3. Full text search (full-text-search)
+
+Performs a full text search of artworks whose metadata contains the search query.
+
+- Inputs:
+  - `query` (string) The term to search the metadata for.
+  - `limit` (number, optional, default 10) The number of resources to return per page.
+  - `page` (number, optional, default 1) The page of results to return. Used for pagination.
+- Outputs:
+
+  ```
+  Title: Untitled
+  Artwork ID: 62290
+  Thumbnail alt text: A work made of oil and enamel on paper, mounted on composition board.
+  Score: 108.70728
+
+  -----
+  ...
+  ...
+  -----
+  Title: Homage to the Square: Light Passage
+  Artwork ID: 5569
+  Thumbnail alt text: Painting of overlapping squares in grey, yellow, gold, and orange.
+  Score: 104.18398
+
+  Pagination Info
+  Total: 8399
+  Total Pages: 840
+  Current Page: 1
+  ```
