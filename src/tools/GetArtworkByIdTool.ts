@@ -77,7 +77,7 @@ export class GetArtworkByIdTool extends BaseTool<typeof artworkByIdSchema, any> 
       try {
         const imageURL = `${iiif_url}/${artwork.image_id}/full/843,/0/default.jpg`;
         const imageBase64 = await imageToBase64(imageURL);
-        const title = `${artwork.title} (${artwork.artist_display})`;
+        const title = `${artwork.title} (${artwork.artist_title})`;
         this.imageByTitle.set(title, imageBase64);
         this.server.server.notification({
           method: 'notifications/resources/list_changed',
