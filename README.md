@@ -35,3 +35,43 @@ Search for artworks by title in the Art Institute of Chicago
   Total Pages: 1
   Current Page: 1
   ```
+
+### 2. Get a specific artwork (get-artwork-by-id)
+
+Gets additional information, including the image if available, for a piece of art based on it's id.
+
+- Inputs:
+  - `id` (number) The ID of the artwork to retrieve.
+- Outputs:
+
+  ```
+  Title: Nighthawks
+  Artist: Edward Hopper (American, 1882–1967)
+  Artist ID: 34996
+  Description: <p>About <em>Nighthawks</em> Edward Hopper recollected, “unconsciously, probably, I was painting the loneliness of a large city.” In an all-night diner, three customers sit at the counter opposite a server, each appear to be lost in thought and disengaged from one another. The composition is tightly organized and spare in details: there is no entrance to the establishment, no debris on the streets. Through harmonious geometric forms and the glow of the diner’s electric lighting, Hopper created a serene, beautiful, yet enigmatic scene. Although inspired by a restaurant Hopper had seen on Greenwich Avenue in New York, the painting is not a realistic transcription of an actual place. As viewers, we are left to wonder about the figures, their relationships, and this imagined world.</p>
+
+  Image ID: 831a05de-d3f6-f4fa-a460-23008dd58dda
+  Place of Origin: United States
+  Dimensions: 84.1 × 152.4 cm (33 1/8 × 60 in.)
+  Medium: Oil on canvas
+  Credit Line: Friends of American Art Collection
+  Department: Arts of the Americas
+  Is On View: Yes
+  Main Reference Number: 1942.51
+  Has not been viewed much: No
+  Date Start: 1942
+  Date End: 1942
+  Date: 1942
+  Fiscal Year: 1942
+  Is Public Domain: No
+  Gallery: Gallery 262
+  Artwork Type: Painting
+  Artist Title: Edward Hopper
+  Artist Titles: Edward Hopper
+  Style Title: Modernism
+
+  ```
+
+  ```
+  **image encoded in base64 if available
+  ```
