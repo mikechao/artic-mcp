@@ -106,3 +106,61 @@ Performs a full text search of artworks whose metadata contains the search query
   Total Pages: 840
   Current Page: 1
   ```
+
+### 4. Artist search (search-for-artist)
+
+Search for a specific artist
+
+- Inputs:
+  - `name` (string) The name of the artist to search for.
+  - `limit` (number, optional, default 10) The number of resources to return per page.
+  - `page` (number, optional, default 1) The page of results to return. Used for pagination.
+- Outputs:
+
+  ```
+  Title: Vincent van Gogh
+  Artist ID: 40610
+  Score: 55.865852
+
+  -----
+  Title: Imitator of Vincent van Gogh
+  Artist ID: 47301
+  Score: 48.782307
+
+  Pagination Info
+  Total: 2
+  Total Pages: 1
+  Current Page: 1
+  ```
+
+### 5. Find artwork by artist (get-artwork-by-artist)
+
+Find works fo art by an artist
+
+- Inputs:
+  - `id` (number) The id of the artist to search for artworks. Should be the Artist ID of the `search-for-artist` tool.
+  - `limit` (number, optional, default 10) The number of resources to return per page.
+  - `page` (number, optional, default 1) The page of results to return. Used for pagination.
+- Outputs:
+
+  ```
+  Title: The Bedroom
+  Artwork ID: 28560
+  Thumbnail alt text: Painting of bedroom, blue walls, green window, tan bed, red bedding.
+  Score: 11473.843
+
+  -----
+  .
+  .
+  .
+  -----
+  Title: Weeping Tree
+  Artwork ID: 52733
+  Thumbnail alt text: A work made of reed pen and black-brown ink, with black chalk on off-white wove paper.
+  Score: 11.8061
+
+  Pagination Info
+  Total: 18
+  Total Pages: 2
+  Current Page: 1
+  ```
