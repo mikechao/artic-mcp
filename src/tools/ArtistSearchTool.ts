@@ -55,7 +55,7 @@ export class ArtistSearchTool extends BaseTool<typeof artistSearchSchema, any> {
       return `Title: ${artist.title}\n`
         + `Artist ID: ${artist.id}\n`
         + `Score: ${artist._score}\n`;
-    });
+    }).join('\n-----\n');
     const paginationText = `\nPagination Info\n`
       + `Total: ${parsedData.pagination.total}\n`
       + `Total Pages: ${parsedData.pagination.total_pages}\n`
