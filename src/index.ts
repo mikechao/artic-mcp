@@ -65,12 +65,12 @@ class ArticServer {
       this.getArtworkByIdTool.inputSchema.shape,
       this.getArtworkByIdTool.execute.bind(this.getArtworkByIdTool),
     );
-    this.server.tool(
-      this.fullTextSearchTool.name,
-      this.fullTextSearchTool.description,
-      this.fullTextSearchTool.inputSchema.shape,
-      this.fullTextSearchTool.execute.bind(this.fullTextSearchTool),
-    );
+    // this.server.tool(
+    //   this.fullTextSearchTool.name,
+    //   this.fullTextSearchTool.description,
+    //   this.fullTextSearchTool.inputSchema.shape,
+    //   this.fullTextSearchTool.execute.bind(this.fullTextSearchTool),
+    // );
     this.server.tool(
       this.artistSearchTool.name,
       this.artistSearchTool.description,

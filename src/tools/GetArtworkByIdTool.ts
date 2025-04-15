@@ -63,13 +63,13 @@ export class GetArtworkByIdTool extends BaseTool<typeof artworkByIdSchema, any> 
       + `Date Start: ${artwork.date_start ?? 'N/A'}\n`
       + `Date End: ${artwork.date_end ?? 'N/A'}\n`
       + `Date: ${artwork.date_display ?? 'N/A'}\n`
-      + `Fiscal Year: ${artwork.fiscal_year}\n`
+      + `Fiscal Year: ${artwork.fiscal_year ?? 'N/A'}\n`
       + `Is Public Domain: ${artwork.is_public_domain ? 'Yes' : 'No'}\n`
-      + `Gallery: ${artwork.gallery_title}\n`
+      + `Gallery: ${artwork.gallery_title ?? 'N/A'}\n`
       + `Artwork Type: ${artwork.artwork_type_title}\n`
       + `Artist Title: ${artwork.artist_title}\n`
       + `Artist Titles: ${artwork.artist_titles.join(', ')}\n`
-      + `Style Title: ${artwork.style_title}\n`;
+      + `Style Title: ${artwork.style_title ?? 'N/A'}\n`;
   }
 
   private async getArtworkImage(artwork: z.infer<typeof artworkSchema>, iiif_url: string) {
