@@ -8,6 +8,7 @@ import { ListResources } from './handlers/ListResources';
 import { ReadResources } from './handlers/ReadResources';
 import { getElasticSearchQueryPrompt } from './prompts/ElasticsearchPrompt';
 import { ArtistSearchTool } from './tools/ArtistSearchTool';
+import { ElasticQueryTool } from './tools/ElasticQueryTool';
 import { FullTextSearchTool } from './tools/FullTextSearchTool';
 import { GetArtworkByArtistTool } from './tools/GetArtworkByArtistTool';
 import { GetArtworkByIdTool } from './tools/GetArtworkByIdTool';
@@ -23,6 +24,7 @@ class ArticServer {
   private getArtworkByIdTool: GetArtworkByIdTool;
   private fullTextSearchTool: FullTextSearchTool;
   private artistSearchTool: ArtistSearchTool;
+  private elasticQueryTool: ElasticQueryTool;
   private getArtworkByArtistTool: GetArtworkByArtistTool;
   private listResources: ListResources;
   private readResources: ReadResources;
@@ -47,6 +49,7 @@ class ArticServer {
     this.fullTextSearchTool = new FullTextSearchTool();
     this.artistSearchTool = new ArtistSearchTool();
     this.getArtworkByArtistTool = new GetArtworkByArtistTool();
+    this.elasticQueryTool = new ElasticQueryTool();
     this.listResources = new ListResources(this.getArtworkByIdTool);
     this.readResources = new ReadResources(this.getArtworkByIdTool);
     this.setupTools();
@@ -84,6 +87,12 @@ class ArticServer {
       this.getArtworkByArtistTool.description,
       this.getArtworkByArtistTool.inputSchema.shape,
       this.getArtworkByArtistTool.execute.bind(this.getArtworkByArtistTool),
+    );
+    this.server.tool(
+      this.elasticQueryTool.name,
+      this.elasticQueryTool.description,
+      this.elasticQueryTool.inputSchema.shape,
+      this.elasticQueryTool.execute.bind(this.elasticQueryTool),
     );
   }
 
