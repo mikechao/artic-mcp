@@ -1,4 +1,5 @@
 [![artic-logo](https://raw.githubusercontent.com/Art-Institute-of-Chicago/template/main/aic-logo.gif)](https://www.artic.edu/)
+<br/>
 [![smithery badge](https://smithery.ai/badge/@mikechao/artic-mcp)](https://smithery.ai/server/@mikechao/artic-mcp)
 
 # Art Institute of Chicago MCP Server
