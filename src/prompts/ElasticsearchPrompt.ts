@@ -34,5 +34,7 @@ export function getElasticSearchQueryPrompt(userQuery: string) {
     
     Now, please convert the following user query into an appropriate Elasticsearch query:
     ${userQuery}
+
+    Once you have generated the Elasticsearch query, present the query to the user.
     `;
 }
