@@ -3,15 +3,19 @@
 import process from 'node:process';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { ListResourcesRequestSchema, ReadResourceRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+import { GetPromptRequestSchema, ListPromptsRequestSchema, ListResourcesRequestSchema, ReadResourceRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 import { ListResources } from './handlers/ListResources';
 import { ReadResources } from './handlers/ReadResources';
+import { getElasticSearchQueryPrompt } from './prompts/ElasticsearchPrompt';
 import { ArtistSearchTool } from './tools/ArtistSearchTool';
-import { ElasticSearchTool } from './tools/ElasticSearchTool';
 import { FullTextSearchTool } from './tools/FullTextSearchTool';
 import { GetArtworkByArtistTool } from './tools/GetArtworkByArtistTool';
 import { GetArtworkByIdTool } from './tools/GetArtworkByIdTool';
 import { SearchByTitleTool } from './tools/SearchByTitleTool';
+
+enum PromptName {
+  ELASTIC = 'elastic_search',
+}
 
 class ArticServer {
   private server: McpServer;
@@ -20,7 +24,6 @@ class ArticServer {
   private fullTextSearchTool: FullTextSearchTool;
   private artistSearchTool: ArtistSearchTool;
   private getArtworkByArtistTool: GetArtworkByArtistTool;
-  private elasticSearchTool: ElasticSearchTool;
   private listResources: ListResources;
   private readResources: ReadResources;
 
@@ -35,6 +38,7 @@ class ArticServer {
           logging: {},
           tools: {},
           resources: {},
+          prompts: {},
         },
       },
     );
@@ -43,11 +47,11 @@ class ArticServer {
     this.fullTextSearchTool = new FullTextSearchTool();
     this.artistSearchTool = new ArtistSearchTool();
     this.getArtworkByArtistTool = new GetArtworkByArtistTool();
-    this.elasticSearchTool = new ElasticSearchTool(this.server);
     this.listResources = new ListResources(this.getArtworkByIdTool);
     this.readResources = new ReadResources(this.getArtworkByIdTool);
     this.setupTools();
-    this.setupRequestHandlers();
+    this.setupResourceRequestHandlers();
+    this.setupPromptRequestHandlers();
   }
 
   private setupTools(): void {
@@ -81,20 +85,52 @@ class ArticServer {
       this.getArtworkByArtistTool.inputSchema.shape,
       this.getArtworkByArtistTool.execute.bind(this.getArtworkByArtistTool),
     );
-    this.server.tool(
-      this.elasticSearchTool.name,
-      this.elasticSearchTool.description,
-      this.elasticSearchTool.inputSchema.shape,
-      this.elasticSearchTool.execute.bind(this.elasticSearchTool),
-    );
   }
 
-  private setupRequestHandlers(): void {
+  private setupResourceRequestHandlers(): void {
     this.server.server.setRequestHandler(ListResourcesRequestSchema, async () => {
       return await this.listResources.handle();
     });
     this.server.server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
       return await this.readResources.handle(request);
+    });
+  }
+
+  private setupPromptRequestHandlers(): void {
+    this.server.server.setRequestHandler(ListPromptsRequestSchema, async () => {
+      return {
+        prompts: [
+          {
+            name: PromptName.ELASTIC,
+            description: 'Generates Elastic Search queries for the Art Institute of Chicago collection',
+            arguments: [
+              {
+                name: 'query',
+                description: 'The user\'s natural language query about the artworks in the Art Institute of Chicago collection.',
+                required: true,
+              },
+            ],
+          },
+        ],
+      };
+    });
+
+    this.server.server.setRequestHandler(GetPromptRequestSchema, async (request) => {
+      const { name, arguments: args } = request.params;
+      if (name === PromptName.ELASTIC && args) {
+        return {
+          messages: [
+            {
+              role: 'assistant',
+              content: {
+                type: 'text',
+                text: getElasticSearchQueryPrompt(args.query),
+              },
+            },
+          ],
+        };
+      }
+      throw new Error(`Unknown prompt: ${name}`);
     });
   }
 
