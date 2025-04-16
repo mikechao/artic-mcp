@@ -1,4 +1,5 @@
 [![artic-logo](https://raw.githubusercontent.com/Art-Institute-of-Chicago/template/main/aic-logo.gif)](https://www.artic.edu/)
+[![smithery badge](https://smithery.ai/badge/@mikechao/artic-mcp)](https://smithery.ai/server/@mikechao/artic-mcp)
 
 # Art Institute of Chicago MCP Server
 
@@ -183,6 +184,14 @@ Add this to your `claude_desktop_config.json`:
     }
   }
 }
+```
+
+## Installing via Smithery
+
+To install artic-mcp for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@mikechao/artic-mcp):
+
+```bash
+npx -y @smithery/cli install @mikechao/artic-mcp --client claude
 ```
 
 ## Example queries
