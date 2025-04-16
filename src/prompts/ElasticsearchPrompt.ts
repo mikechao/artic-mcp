@@ -35,6 +35,7 @@ export function getElasticSearchQueryPrompt(userQuery: string) {
     Now, please convert the following user query into an appropriate Elasticsearch query:
     ${userQuery}
 
-    Once you have generated the Elastics Search query, please provide a brief explanation of how the query works and what it is searching for.
+    The only tool you should use is the named 'elastic-query-tool' which will execute the Elasticsearch query you generated. Do not use any other tools or APIs.
+    Do not include any explanations or additional text. Just provide the JSON query.
     `;
 }
