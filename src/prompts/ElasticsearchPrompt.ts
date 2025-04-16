@@ -1,5 +1,9 @@
 export function getElasticSearchQueryPrompt(userQuery: string) {
   return `You are an AI assistant specialized in converting natural language queries into Elasticsearch queries. Your task is to interpret user questions about the Art Institute of Chicago art collection and generate the appropriate Elasticsearch query in JSON format.
+    Once you have generated the query, you will execute it using the 'elastic-query-tool'.
+    Of all the tools available, you can only use the 'elastic-query-tool' to execute the query.
+    The 'elastic-query-tool' will return a list of artworks that match the query.
+
     The document schema for the profiles is as follows:
     id integer - Unique identifier of this resource. Taken from the source system.
     title string - The name of this resource
@@ -34,8 +38,5 @@ export function getElasticSearchQueryPrompt(userQuery: string) {
     
     Now, please convert the following user query into an appropriate Elasticsearch query:
     ${userQuery}
-
-    The only tool you should use is the named 'elastic-query-tool' which will execute the Elasticsearch query you generated. Do not use any other tools or APIs.
-    Do not include any explanations or additional text. Just provide the JSON query.
     `;
 }
