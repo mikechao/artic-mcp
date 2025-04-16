@@ -14,7 +14,7 @@ import { GetArtworkByIdTool } from './tools/GetArtworkByIdTool';
 import { SearchByTitleTool } from './tools/SearchByTitleTool';
 
 enum PromptName {
-  ELASTIC = 'elastic_search',
+  ELASTIC = 'elastic_search_query_generator',
 }
 
 class ArticServer {
@@ -121,7 +121,7 @@ class ArticServer {
         return {
           messages: [
             {
-              role: 'assistant',
+              role: 'user',
               content: {
                 type: 'text',
                 text: getElasticSearchQueryPrompt(args.query),
