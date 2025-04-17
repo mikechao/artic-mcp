@@ -10,7 +10,10 @@ const artistSearchSchema = z.object({
 
 export class ArtistSearchTool extends BaseTool<typeof artistSearchSchema, any> {
   public readonly name: string = 'search-for-artist';
-  public readonly description: string = 'Search for artists in the Art Institute of Chicago collection';
+  public readonly description: string = `Search for artists in the Art Institute of Chicago collection.`
+    + `This tool will only check if the artist exists in the collection. No information about artworks will be provided.`
+    + `It will return Title, Artist ID, and Score.`;
+
   public readonly inputSchema = artistSearchSchema;
 
   constructor() {

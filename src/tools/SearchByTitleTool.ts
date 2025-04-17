@@ -10,7 +10,10 @@ const titleSearchSchema = z.object({
 
 export class SearchByTitleTool extends BaseTool<typeof titleSearchSchema, any> {
   public readonly name: string = 'search-by-title';
-  public readonly description: string = 'Search for artworks by title in the Art Institute of Chicago. Pagination is supported with the page parameter';
+  public readonly description: string = `Search for artworks by title in the Art Institute of Chicago.`
+    + `This tool is only for when the user specifically searches for art by title.`
+    + `Pagination is supported with the page parameter`;
+
   public readonly inputSchema = titleSearchSchema;
 
   constructor() {
