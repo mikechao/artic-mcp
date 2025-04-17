@@ -2,6 +2,10 @@
 <br/>
 [![smithery badge](https://smithery.ai/badge/@mikechao/artic-mcp)](https://smithery.ai/server/@mikechao/artic-mcp)
 
+<a href="https://glama.ai/mcp/servers/@mikechao/artic-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@mikechao/artic-mcp/badge" alt="artic-mcp MCP server" />
+</a>
+
 # Art Institute of Chicago MCP Server
 
 A Model Context Protocol (MCP) server that provides access to the [Art Institute of Chicago Collection](https://www.artic.edu/collection) through natural language interactions. This server allows AI models to search the art collection at the Art Institute of Chicago and have artworks available as a Resource.
