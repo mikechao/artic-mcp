@@ -35,7 +35,7 @@ export class GetArtworkByIdTool extends BaseTool<typeof artworkByIdSchema, any> 
       artworkResponseSchema,
     );
     const artwork = parsedResponse.data;
-    const text = this.formatArtworkDetails(artwork);
+    const text = this.formatArtworkDetails(artwork, `${parsedResponse.config.iiif_url}`);
 
     const content = [];
     content.push({ type: 'text' as const, text });
@@ -48,7 +48,7 @@ export class GetArtworkByIdTool extends BaseTool<typeof artworkByIdSchema, any> 
     return { content };
   }
 
-  private formatArtworkDetails(artwork: z.infer<typeof artworkSchema>) {
+  private formatArtworkDetails(artwork: z.infer<typeof artworkSchema>, iiif_url: string) {
     return `Title: ${artwork.title}\n`
       + `${artwork.alt_titles ? `Alt Titles: ${artwork.alt_titles.join(', ')}\n` : ''}`
       + `Artist: ${artwork.artist_display}\n`
@@ -72,7 +72,8 @@ export class GetArtworkByIdTool extends BaseTool<typeof artworkByIdSchema, any> 
       + `Artwork Type: ${artwork.artwork_type_title}\n`
       + `Artist Title: ${artwork.artist_title}\n`
       + `Artist Titles: ${artwork.artist_titles.join(', ')}\n`
-      + `Style Title: ${artwork.style_title ?? 'N/A'}\n`;
+      + `Style Title: ${artwork.style_title ?? 'N/A'}\n`
+      + `Image URL: ${artwork.image_id ? `${iiif_url}/${artwork.image_id}/full/843,/0/default.jpg` : 'N/A'}\n`;
   }
 
   private async getArtworkImage(artwork: z.infer<typeof artworkSchema>, iiif_url: string) {
