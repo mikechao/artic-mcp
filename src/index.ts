@@ -4,8 +4,10 @@ import process from 'node:process';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { ListResourcesRequestSchema, ReadResourceRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+import z from 'zod';
 import { ListResources } from './handlers/ListResources';
 import { ReadResources } from './handlers/ReadResources';
+import { getGalleryPrompt } from './prompts/GalleryPrompt';
 import { ArtistSearchTool } from './tools/ArtistSearchTool';
 import { FullTextSearchTool } from './tools/FullTextSearchTool';
 import { GetArtworkByArtistTool } from './tools/GetArtworkByArtistTool';
@@ -30,6 +32,7 @@ class ArticServer {
       },
       {
         capabilities: {
+          prompts: {},
           tools: {},
           resources: {},
         },
@@ -44,6 +47,7 @@ class ArticServer {
     this.readResources = new ReadResources(this.getArtworkByIdTool);
     this.setupTools();
     this.setupRequestHandlers();
+    this.setupPrompts();
   }
 
   private setupTools(): void {
@@ -86,6 +90,29 @@ class ArticServer {
     this.server.server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
       return await this.readResources.handle(request);
     });
+  }
+
+  private setupPrompts(): void {
+    this.server.prompt(
+      'art-gallery',
+      'Generates an art gallery for a specific artist',
+      {
+        artist: z.string().describe('The name of the artist to generate a gallery for'),
+      },
+      async ({ artist }) => {
+        return {
+          messages: [
+            {
+              role: 'user',
+              content: {
+                type: 'text',
+                text: getGalleryPrompt(artist),
+              },
+            },
+          ],
+        };
+      },
+    );
   }
 
   async start(): Promise<void> {
