@@ -6,6 +6,7 @@ import { BaseTool } from './BaseTool';
 
 const artworkByIdSchema = z.object({
   id: z.number().describe('The ID of the artwork to retrieve.'),
+  includeImage: z.boolean().optional().default(true).describe('Whether to include the artwork image in the response.'),
 });
 
 export class GetArtworkByIdTool extends BaseTool<typeof artworkByIdSchema, any> {
@@ -23,7 +24,7 @@ export class GetArtworkByIdTool extends BaseTool<typeof artworkByIdSchema, any> 
   }
 
   public async executeCore(input: z.infer<typeof this.inputSchema>) {
-    const { id } = input;
+    const { id, includeImage } = input;
 
     const url = new URL(`${this.apiBaseUrl}/artworks/${id}`);
     url.searchParams.set('fields', this.fields.join(','));
@@ -38,9 +39,11 @@ export class GetArtworkByIdTool extends BaseTool<typeof artworkByIdSchema, any> 
 
     const content = [];
     content.push({ type: 'text' as const, text });
-    const image = await this.getArtworkImage(artwork, `${parsedResponse.config.iiif_url}`);
-    if (image) {
-      content.push(image);
+    if (includeImage) {
+      const image = await this.getArtworkImage(artwork, `${parsedResponse.config.iiif_url}`);
+      if (image) {
+        content.push(image);
+      }
     }
     return { content };
   }

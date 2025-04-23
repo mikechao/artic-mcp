@@ -48,6 +48,7 @@ Gets additional information, including the image if available, for a piece of ar
 
 - Inputs:
   - `id` (number) The ID of the artwork to retrieve.
+  - `includeImage` (boolean, optional, default true) Whether to include the artwork image in the response.
 - Outputs:
 
   ```
