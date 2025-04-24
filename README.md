@@ -181,13 +181,13 @@ Images are not displayed in the Claude Desktop app due to security reasons. You 
 
 Claude Desktop Example
 
-<a href="https://mikechao.github.io/images/gallery-prompt.webp">
+<a href="https://mikechao.github.io/images/gallery-prompt.webp" target="_blank" rel="noopener noreferrer">
 <img width="380" height="200" src="https://mikechao.github.io/images/gallery-prompt.webp" alt="claude desktop example" />
 </a>
 
 The Generated Gallery in a browser
 
-<a href="https://mikechao.github.io/images/gallery-prompt-browser.webp">
+<a href="https://mikechao.github.io/images/gallery-prompt-browser.webp" target="_blank" rel="noopener noreferrer">
 <img width="380" height="200" src="https://mikechao.github.io/images/gallery-prompt-browser.webp" alt="claude desktop example" />
 </a>
 
