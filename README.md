@@ -13,6 +13,7 @@ A Model Context Protocol (MCP) server that provides access to the [Art Institute
 ## Features
 
 This server provides AI models with the following tools for interacting with the art collection.
+The server also includes a prompt, **art-gallery** that will generate an interactive art gallery for a specific artist.
 
 ### 1. Search By Title (search-by-title)
 
@@ -80,7 +81,7 @@ Gets additional information, including the image if available, for a piece of ar
   ```
 
   ```
-  **image encoded in base64 if available
+  **image encoded in base64 if available and includeImage is true
   ```
 
 ### 3. Full text search (full-text-search)
@@ -171,6 +172,24 @@ Find works fo art by an artist
   Total Pages: 2
   Current Page: 1
   ```
+
+### 6. Art Gallery Prompt (art-gallery)
+
+In the Claude Desktop app, use this prompt—along with your chosen artist’s name—to generate an interactive HTML art gallery showcasing their work.
+
+Images are not displayed in the Claude Desktop app due to security reasons. You can download the HTML from Claude Desktop and view the images in the browser.
+
+Claude Desktop Example
+
+<a href="https://mikechao.github.io/images/gallery-prompt.webp">
+<img width="380" height="200" src="https://mikechao.github.io/images/gallery-prompt.webp" alt="claude desktop example" />
+</a>
+
+The Generated Gallery in a browser
+
+<a href="https://mikechao.github.io/images/gallery-prompt-browser.webp">
+<img width="380" height="200" src="https://mikechao.github.io/images/gallery-prompt-browser.webp" alt="claude desktop example" />
+</a>
 
 ## Usage
 
