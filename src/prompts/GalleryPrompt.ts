@@ -14,5 +14,6 @@ export function getGalleryPrompt(artist: string) {
     + `\n3. When the user clicks on the image, it should show the rest of the information about the artwork.`
     + `\n4. For the image use Image URL from the 'get-artwork-by-id' tool.`
     + `\n5. Make sure to attribute the image to the Art Institute of Chicago. Their URL is https://www.artic.edu/`
+    + `\n6. Once you have created the gallery, let the user know that images are not allowed in HTML artifacts for security reasons. Let them know that they can download the gallery and view the images in a browser.`
   ;
 }
