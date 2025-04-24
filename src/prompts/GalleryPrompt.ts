@@ -11,10 +11,12 @@ export function getGalleryPrompt(artist: string) {
     + `\nTake into account the following when creating the gallery:`
     + `\n1. Execute the tools you need to get the information you need.`
     + `\n2. For each artwork in the gallery include Title and Artist below the image`
-    + `\n3. Include the artist's name at the top of the gallery.`
-    + `\n4. When the user clicks on the image, it should show the rest of the information about the artwork.`
-    + `\n5. For the image use Image URL from the 'get-artwork-by-id' tool.`
-    + `\n6. Make sure to attribute the image to the Art Institute of Chicago. Their URL is https://www.artic.edu/`
-    + `\n7. Once you have created the gallery, let the user know that images are not allowed in HTML artifacts for security reasons. Let them know that they can download the gallery and view the images in a browser.`
+    + `\n3. For each artwork in the gallery use the Image URL, do NOT use a placeholder image.`
+    + `\n4. Include the artist's name at the top of the gallery.`
+    + `\n5. When the user clicks on the image, it should show the rest of the information about the artwork.`
+    + `\n6. When displaying the rest of the information and the user clicks on the image, it should show the image in a new tab.`
+    + `\n7. For the image use Image URL from the 'get-artwork-by-id' tool.`
+    + `\n8. Make sure to attribute the image to the Art Institute of Chicago. Their URL is https://www.artic.edu/`
+    + `\n9. Once you have created the gallery, let the user know that images are not allowed in HTML artifacts for security reasons. Let them know that they can download the gallery and view the images in a browser.`
   ;
 }
