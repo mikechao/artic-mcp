@@ -7,13 +7,14 @@ export function getGalleryPrompt(artist: string) {
     + `\n'get-artwork-by-artist' - Get artworks by artist id in the Art Institute of Chicago collection.`
     + `\n'get-artwork-by-id' - Get additional information, including the Image URL if available, about a specific artwork by its ID from the Art Institute of Chicago.`
     + `\nWhen using the 'get-artwork-by-id' tool, be sure to set the includeImage parameter to false.`
-    + `\nYour task is to create a gallery, using an artifact, for the artist using the information from the tools.`
+    + `\nYour task is to create a gallery, using an artifact, for the artist using the information from the execution of the tools.`
     + `\nTake into account the following when creating the gallery:`
-    + `\n1. For each artwork in the gallery include Title and Artist below the image`
-    + `\n2. Include the artist's name at the top of the gallery.`
-    + `\n3. When the user clicks on the image, it should show the rest of the information about the artwork.`
-    + `\n4. For the image use Image URL from the 'get-artwork-by-id' tool.`
-    + `\n5. Make sure to attribute the image to the Art Institute of Chicago. Their URL is https://www.artic.edu/`
-    + `\n6. Once you have created the gallery, let the user know that images are not allowed in HTML artifacts for security reasons. Let them know that they can download the gallery and view the images in a browser.`
+    + `\n1. Execute the tools you need to get the information you need.`
+    + `\n2. For each artwork in the gallery include Title and Artist below the image`
+    + `\n3. Include the artist's name at the top of the gallery.`
+    + `\n4. When the user clicks on the image, it should show the rest of the information about the artwork.`
+    + `\n5. For the image use Image URL from the 'get-artwork-by-id' tool.`
+    + `\n6. Make sure to attribute the image to the Art Institute of Chicago. Their URL is https://www.artic.edu/`
+    + `\n7. Once you have created the gallery, let the user know that images are not allowed in HTML artifacts for security reasons. Let them know that they can download the gallery and view the images in a browser.`
   ;
 }
