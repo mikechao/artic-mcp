@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mikechao-artic-mcp-badge.png)](https://mseep.ai/app/mikechao-artic-mcp)
+
 [![artic-logo](https://raw.githubusercontent.com/Art-Institute-of-Chicago/template/main/aic-logo.gif)](https://www.artic.edu/)
 <br/>
 [![smithery badge](https://smithery.ai/badge/@mikechao/artic-mcp)](https://smithery.ai/server/@mikechao/artic-mcp)
