@@ -1,9 +1,9 @@
-[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mikechao-artic-mcp-badge.png)](https://mseep.ai/app/mikechao-artic-mcp)
-
 [![artic-logo](https://raw.githubusercontent.com/Art-Institute-of-Chicago/template/main/aic-logo.gif)](https://www.artic.edu/)
 <br/>
 [![smithery badge](https://smithery.ai/badge/@mikechao/artic-mcp)](https://smithery.ai/server/@mikechao/artic-mcp)
-
+<br/>
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mikechao-artic-mcp-badge.png)](https://mseep.ai/app/mikechao-artic-mcp)
+<br/>
 <a href="https://glama.ai/mcp/servers/@mikechao/artic-mcp">
   <img width="380" height="200" src="https://glama.ai/mcp/servers/@mikechao/artic-mcp/badge" alt="artic-mcp MCP server" />
 </a>
