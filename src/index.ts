@@ -1,9 +1,6 @@
-#!/usr/bin/env node
-
-import process from 'node:process';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { ListResourcesRequestSchema, ReadResourceRequestSchema } from '@modelcontextprotocol/sdk/types.js';
+import { McpAgent } from 'agents/mcp';
 import z from 'zod';
 import { ListResources } from './handlers/ListResources';
 import { ReadResources } from './handlers/ReadResources';
@@ -14,30 +11,30 @@ import { GetArtworkByArtistTool } from './tools/GetArtworkByArtistTool';
 import { GetArtworkByIdTool } from './tools/GetArtworkByIdTool';
 import { SearchByTitleTool } from './tools/SearchByTitleTool';
 
-class ArticServer {
-  private server: McpServer;
-  private searchByTitleTool: SearchByTitleTool;
-  private getArtworkByIdTool: GetArtworkByIdTool;
-  private fullTextSearchTool: FullTextSearchTool;
-  private artistSearchTool: ArtistSearchTool;
-  private getArtworkByArtistTool: GetArtworkByArtistTool;
-  private listResources: ListResources;
-  private readResources: ReadResources;
+export class ArticServer extends McpAgent {
+  private searchByTitleTool!: SearchByTitleTool;
+  private getArtworkByIdTool!: GetArtworkByIdTool;
+  private fullTextSearchTool!: FullTextSearchTool;
+  private artistSearchTool!: ArtistSearchTool;
+  private getArtworkByArtistTool!: GetArtworkByArtistTool;
+  private listResources!: ListResources;
+  private readResources!: ReadResources;
 
-  constructor() {
-    this.server = new McpServer(
-      {
-        name: 'artic-server',
-        version: '0.1.0',
+  server = new McpServer(
+    {
+      name: 'artic-server',
+      version: '0.1.0',
+    },
+    {
+      capabilities: {
+        prompts: {},
+        tools: {},
+        resources: {},
       },
-      {
-        capabilities: {
-          prompts: {},
-          tools: {},
-          resources: {},
-        },
-      },
-    );
+    },
+  );
+
+  async init() {
     this.searchByTitleTool = new SearchByTitleTool();
     this.getArtworkByIdTool = new GetArtworkByIdTool(this.server);
     this.fullTextSearchTool = new FullTextSearchTool();
@@ -99,7 +96,7 @@ class ArticServer {
       {
         artist: z.string().describe('The name of the artist to generate a gallery for'),
       },
-      async ({ artist }) => {
+      async ({ artist }: { artist: string }) => {
         return {
           messages: [
             {
@@ -114,16 +111,20 @@ class ArticServer {
       },
     );
   }
-
-  async start(): Promise<void> {
-    const transport = new StdioServerTransport();
-    await this.server.connect(transport);
-    console.error('Art Institute of Chicago MCP server running on stdio');
-  }
 }
 
-const server = new ArticServer();
-server.start().catch((error) => {
-  console.error('Error starting server:', error);
-  process.exit(1);
-});
+export default {
+  fetch(request: Request, env: Env, ctx: ExecutionContext) {
+    const url = new URL(request.url);
+
+    if (url.pathname === '/sse' || url.pathname === '/sse/message') {
+      return ArticServer.serveSSE('/sse').fetch(request, env, ctx);
+    }
+
+    if (url.pathname === '/mcp') {
+      return ArticServer.serve('/mcp').fetch(request, env, ctx);
+    }
+
+    return new Response('Not found', { status: 404 });
+  },
+};
