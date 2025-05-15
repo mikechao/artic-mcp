@@ -5,23 +5,9 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "remote-artic-mcp-server-authless",
-  "main": "src/index.ts",
+  "main": "src/test-worker.ts",
   "compatibility_date": "2025-03-10",
   "compatibility_flags": ["nodejs_compat"],
-  "migrations": [
-    {
-      "new_sqlite_classes": ["ArticServer"],
-      "tag": "v1"
-    }
-  ],
-  "durable_objects": {
-    "bindings": [
-      {
-        "class_name": "ArticServer",
-        "name": "MCP_OBJECT"
-      }
-    ]
-  },
   "observability": {
     "enabled": true
   }
