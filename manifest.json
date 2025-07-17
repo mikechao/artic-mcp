@@ -1,0 +1,55 @@
+{
+  "dxt_version": "0.1",
+  "name": "artic-mcp",
+  "version": "0.9.1",
+  "description": "A Model Context Protocol (MCP) server that provides access to the Art Institute of Chicago Collection through natural language interactions. This server allows AI models to search the Art Institute of Chicago Collection and have art works available as a Resource.",
+  "author": {
+    "name": "Mike Chao",
+    "email": "mike.chao.one@gmail.com",
+    "url": "https://github.com/mikechao"
+  },
+  "documentation": "https://github.com/mikechao/artic-mcp/blob/main/README.md",
+  "server": {
+    "type": "node",
+    "entry_point": "dist/index.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/index.js"
+      ],
+      "env": {}
+    }
+  },
+  "tools": [
+    {
+      "name": "search-by-title",
+      "description": "Search for artworks by title in the Art Institute of Chicago"
+    },
+    {
+      "name": "get-artwork-by-id",
+      "description": "Gets additional information, including the image if available, for a piece of art based on it's id."
+    },
+    {
+      "name": "full-text-search",
+      "description": "Performs a full text search of artworks whose metadata contains the search query."
+    },
+    {
+      "name": "search-for-artist",
+      "description": "Search for a specific artist"
+    },
+    {
+      "name": "get-artwork-by-artist",
+      "description": "Find works of art by an artist"
+    }
+  ],
+  "keywords": [
+    "art-institute-of-chicago",
+    "art",
+    "museum"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mikechao/artic-mcp.git"
+  }
+}
