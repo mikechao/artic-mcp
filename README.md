@@ -5,7 +5,7 @@
 [![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mikechao-artic-mcp-badge.png)](https://mseep.ai/app/mikechao-artic-mcp)
 <br/>
 <a href="https://glama.ai/mcp/servers/@mikechao/artic-mcp">
-  <img width="380" height="200" src="https://glama.ai/mcp/servers/@mikechao/artic-mcp/badge" alt="artic-mcp MCP server" />
+<img width="380" height="200" src="https://glama.ai/mcp/servers/@mikechao/artic-mcp/badge" alt="artic-mcp MCP server" />
 </a>
 
 # Art Institute of Chicago MCP Server
