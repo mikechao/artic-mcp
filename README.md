@@ -3,6 +3,7 @@
 [![smithery badge](https://smithery.ai/badge/@mikechao/artic-mcp)](https://smithery.ai/server/@mikechao/artic-mcp)
 <br/>
 [![MseeP.ai Security Assessment Badge](https://mseep.net/pr/mikechao-artic-mcp-badge.png)](https://mseep.ai/app/mikechao-artic-mcp)
+[![Verified on MseeP](https://mseep.ai/badge.svg)](https://mseep.ai/app/d10632ad-6dcb-4f97-a3ca-eae970713956)
 <br/>
 <a href="https://glama.ai/mcp/servers/@mikechao/artic-mcp">
 <img width="380" height="200" src="https://glama.ai/mcp/servers/@mikechao/artic-mcp/badge" alt="artic-mcp MCP server" />
