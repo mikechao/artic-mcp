@@ -146,7 +146,7 @@ Search for a specific artist
 
 ### 5. Find artwork by artist (get-artwork-by-artist)
 
-Find works fo art by an artist
+Find works of art by an artist
 
 - Inputs:
   - `id` (number) The id of the artist to search for artworks. Should be the Artist ID of the `search-for-artist` tool.
