@@ -13,6 +13,7 @@ import { FullTextSearchTool } from './tools/FullTextSearchTool';
 import { GetArtworkByArtistTool } from './tools/GetArtworkByArtistTool';
 import { GetArtworkByIdTool } from './tools/GetArtworkByIdTool';
 import { SearchByTitleTool } from './tools/SearchByTitleTool';
+import { SearchByMediumTool } from './tools/SearchByMediumTool';
 
 class ArticServer {
   private server: McpServer;
@@ -21,6 +22,7 @@ class ArticServer {
   private fullTextSearchTool: FullTextSearchTool;
   private artistSearchTool: ArtistSearchTool;
   private getArtworkByArtistTool: GetArtworkByArtistTool;
+  private searchByMediumTool: SearchByMediumTool;
   private listResources: ListResources;
   private readResources: ReadResources;
 
@@ -43,6 +45,7 @@ class ArticServer {
     this.fullTextSearchTool = new FullTextSearchTool();
     this.artistSearchTool = new ArtistSearchTool();
     this.getArtworkByArtistTool = new GetArtworkByArtistTool();
+    this.searchByMediumTool = new SearchByMediumTool();
     this.listResources = new ListResources(this.getArtworkByIdTool);
     this.readResources = new ReadResources(this.getArtworkByIdTool);
     this.setupTools();
@@ -80,6 +83,12 @@ class ArticServer {
       this.getArtworkByArtistTool.description,
       this.getArtworkByArtistTool.inputSchema.shape,
       this.getArtworkByArtistTool.execute.bind(this.getArtworkByArtistTool),
+    );
+    this.server.tool(
+      this.searchByMediumTool.name,
+      this.searchByMediumTool.description,
+      this.searchByMediumTool.inputSchema.shape,
+      this.searchByMediumTool.execute.bind(this.searchByMediumTool),
     );
   }
 
