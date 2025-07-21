@@ -176,7 +176,32 @@ Find works of art by an artist
   Current Page: 1
   ```
 
-### 6. Art Gallery Prompt (art-gallery)
+### 6. Find artwork by medium (search-by-medium)
+
+Search for artworks by medium in the Art Institute of Chicago
+
+- Inputs
+  - `medium` (string) The medium to search for (e.g., "oil on canvas", "acrylic on panel", "watercolor on paper").
+  - `limit` (number, optional, default 10) The number of resources to return per page.
+  - `page` (number, optional, default 1) The page of results to return. Used for pagination.
+- Outputs:
+
+  ```
+  Title: The Bedroom
+  Artwork ID: 28560
+  Thumbnail alt text: Painting of bedroom, blue walls, green window, tan bed, red bedding.
+  Score: 56644.137
+
+  -----
+  Title: Starry Night and the Astronauts
+  Artwork ID: 129884
+  Thumbnail alt text: Abstract painting composed of small vertical dabs of multiple shades of blue with a small area of similar strokes of red, orange, and yellow in the upper right.
+  Score: 44797.906
+
+  -----
+  ```
+
+### 7. Art Gallery Prompt (art-gallery)
 
 In the Claude Desktop app, use this prompt—along with your chosen artist’s name—to generate an interactive HTML art gallery showcasing their work.
 

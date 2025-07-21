@@ -40,6 +40,10 @@
     {
       "name": "get-artwork-by-artist",
       "description": "Find works of art by an artist"
+    },
+    {
+      "name":"search-by-medium",
+      "description": "Search for artworks by medium in the Art Institute of Chicago"
     }
   ],
   "keywords": [
